@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="content">
+        <div id="feed">
+            <div class="title">Лента</div>
+            <div class="feed">
+                <div class="feed-item survey" style="background-color: #023047;" onclick="openCourseModal()">
+                    <div class="feed-item-content">
+                        <div class="title">Продвинутый курс по уборке</div>
+                        <div class="description">Курс для повышения квалификации горничных</div>
+                        <div class="progress">
+                            <div class="total-bar"></div>
+                            <span class="percentage">50%</span>
+                            <div class="bar"></div>
+                        </div>
+                    </div>
+                    <div class="goto">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#ffffff">
+                            <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="feed-item survey" onclick="openSurveyModal()" id="s">
+                    <div class="feed-item-content">
+                        <div class="title">Пройти опрос</div>
+                        <div class="description">Оценка удовлетворенности сотрудников</div>
+                        <div class="deadline">до 30.11.2024</div>
+                    </div>
+                    <div class="goto">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#ffffff">
+                            <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="day">
+                    <span class="date" id="today-date" style="margin-bottom: 0 !important;"></span>
+                    <div id="no-tasks" class="hidden" style="text-align: center;">Нет задач</div>
+                    <div class="feed-item task" id="first-task">
+                        <div class="completion" onclick="completeTask()"></div>
+                        <div class="task-data">
+                            <div class="title">Уборка конференц-зала</div>
+                            <div class="description">Необходимо убрать после мероприятия</div>
+                            <div class="deadline">сегодня</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="day">
+                    <span class="date" id="tomorrow-date" style="margin-bottom: 0 !important;"></span>
+                    <div class="feed-item task">
+                        <div class="completion"></div>
+                        <div class="task-data">
+                            <div class="title">Задача</div>
+                            <div class="description">Описание задачи</div>
+                            <div class="deadline">дедлайн</div>
+                        </div>
+                    </div>
+                    <div class="feed-item task">
+                        <div class="completion" style="border: 2px solid #0fa3b1;"></div>
+                        <div class="task-data" style="background-color: #0fa3b1;">
+                            <div class="title">Задача</div>
+                            <div class="description">Описание задачи</div>
+                            <div class="deadline">дедлайн</div>
+                        </div>
+                    </div>
+                    <div class="feed-item task">
+                        <div class="completion" style="border: 2px solid #f9844a;"></div>
+                        <div class="task-data" style="background-color: #f9844a;">
+                            <div class="title">Задача</div>
+                            <div class="description">Описание задачи</div>
+                            <div class="deadline">дедлайн</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="knowledge-base" class="hidden">
+            <div class="container">
+                <!-- Вкладки -->
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('for-you')">Для Вас</button>
+                    <button class="tab" onclick="switchTab('life-situations')">Жизненные ситуации</button>
+                    <button class="tab" onclick="switchTab('all')">Все</button>
+                </div>
+
+                <!-- Поиск -->
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Поиск..." oninput="searchContent()">
+                </div>
+
+                <!-- Секции -->
+                <div class="content">
+                    <div id="for-you" class="content-tab active">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Регламент уборки номеров
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Инструкция по уборке номеров: начать с ванной, затем комнаты, не забыть заменить
+                                        полотенца и постельное бельё.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Как проверить мини-бар
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Проверить заполненность мини-бара, пополнить отсутствующие позиции, зафиксировать
+                                        использование.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="life-situations" class="content-tab">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Что делать, если заболел?
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Сообщите своему руководителю, возьмите больничный и обратитесь к врачу.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Как сообщить об опоздании?
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Сообщите на ресепшен или руководителю заранее и объясните причину.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="all" class="content-tab">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Регламент уборки номеров
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Инструкция по уборке номеров: начать с ванной, затем комнаты, не забыть заменить
+                                        полотенца и постельное бельё.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Как проверить мини-бар
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Проверить заполненность мини-бара, пополнить отсутствующие позиции, зафиксировать
+                                        использование.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Что делать, если заболел?
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Сообщите своему руководителю, возьмите больничный и обратитесь к врачу.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-title" onclick="toggleAccordion(this)">Как сообщить об опоздании?
+                                </div>
+                                <div class="accordion-content">
+                                    <p>Сообщите на ресепшен или руководителю заранее и объясните причину.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="profile" class="hidden">
+            <div class="container">
+                <!-- Заголовок профиля -->
+                <div class="profile-header">
+                    <img src="m3.png" alt="Фото сотрудника" class="profile-picture">
+                    <div class="profile-info">
+                        <h1 class="profile-name">Анна Иванова</h1>
+                        <p class="profile-role">Горничная</p>
+                    </div>
+                </div>
+
+                <!-- Разделы профиля -->
+                <div class="profile-sections">
+                    <!-- Личная информация -->
+                    <div class="section">
+                        <h2 class="section-title">Личная информация</h2>
+                        <ul class="info-list">
+                            <li><strong>Email:</strong> anna.ivanova@example.com</li>
+                            <li><strong>Телефон:</strong> +7 (900) 123-45-67</li>
+                            <li><strong>Дата найма:</strong> 01.01.2020</li>
+                        </ul>
+                    </div>
+
+                    <!-- Настройки -->
+                    <div class="section">
+                        <h2 class="section-title">Настройки</h2>
+                        <ul class="settings-list">
+                            <li><button class="settings-button">Изменить пароль</button></li>
+                            <li><button class="settings-button">Обновить контактные данные</button></li>
+                            <li><button class="settings-button">Выйти из системы</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar">
+        <div class="navbar-items">
+            <div class="navbar-item active" onclick="showContent('feed', this)">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#5985E1">
+                        <path
+                            d="M200-520q-33 0-56.5-23.5T120-600v-160q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v160q0 33-23.5 56.5T760-520H200Zm0-80h560v-160H200v160Zm0 480q-33 0-56.5-23.5T120-200v-160q0-33 23.5-56.5T200-440h560q33 0 56.5 23.5T840-360v160q0 33-23.5 56.5T760-120H200Zm0-80h560v-160H200v160Zm0-400v-160 160Zm0 400v-160 160Z" />
+                    </svg>
+                </div>
+                <div class="title">Лента</div>
+            </div>
+            <div class="navbar-item" onclick="showContent('knowledge-base', this)">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#5985E1">
+                        <path
+                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                    </svg>
+                </div>
+                <div class="title">База знаний</div>
+            </div>
+            <div class="navbar-item" onclick="showContent('profile', this)">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#5985E1">
+                        <path
+                            d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+                    </svg>
+                </div>
+                <div class="title">Профиль</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="survey-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeSurveyModal()">&times;</span>
+            <div id="survey-questions">
+                <!-- Страница 1 -->
+                <div class="survey-page" id="page-1">
+                    <h1>Вопрос 1 из 3</h1>
+                    <p>Насколько вы удовлетворены условиями работы?</p>
+                    <div class="options">
+                        <div class="option" onclick="selectAnswer(1, 'Очень неудовлетворён', this)">Очень неудовлетворён
+                        </div>
+                        <div class="option" onclick="selectAnswer(1, 'Скорее неудовлетворён', this)">Скорее
+                            неудовлетворён
+                        </div>
+                        <div class="option" onclick="selectAnswer(1, 'Нейтрально', this)">Нейтрально</div>
+                        <div class="option" onclick="selectAnswer(1, 'Скорее удовлетворён', this)">Скорее удовлетворён
+                        </div>
+                        <div class="option" onclick="selectAnswer(1, 'Очень удовлетворён', this)">Очень удовлетворён
+                        </div>
+                    </div>
+                    <button class="prev-button hidden" onclick="prevPage(1)">Назад</button>
+                </div>
+
+                <!-- Страница 2 -->
+                <div class="survey-page hidden" id="page-2">
+                    <h1>Вопрос 2 из 3</h1>
+                    <p>Как вы оцениваете взаимодействие с коллегами?</p>
+                    <div class="options">
+                        <div class="option" onclick="selectAnswer(2, 'Очень плохо', this)">Очень плохо</div>
+                        <div class="option" onclick="selectAnswer(2, 'Скорее плохо', this)">Скорее плохо</div>
+                        <div class="option" onclick="selectAnswer(2, 'Нейтрально', this)">Нейтрально</div>
+                        <div class="option" onclick="selectAnswer(2, 'Скорее хорошо', this)">Скорее хорошо</div>
+                        <div class="option" onclick="selectAnswer(2, 'Очень хорошо', this)">Очень хорошо</div>
+                    </div>
+                    <button class="prev-button" onclick="prevPage(2)">Назад</button>
+                </div>
+
+                <!-- Страница 3 -->
+                <div class="survey-page hidden" id="page-3">
+                    <h1>Вопрос 3 из 3</h1>
+                    <p>Какие изменения вы хотели бы предложить?</p>
+                    <textarea rows="4" placeholder="Ваш ответ..."></textarea>
+                    <button class="prev-button" onclick="prevPage(3)">Назад</button>
+                    <button class="submit-button" onclick="submitSurvey()" style="padding: 16px 0;">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Модальное окно для курса -->
+    <div id="course-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeCourseModal()">&times;</span>
+            <div id="course-content" style="width: 100%;">
+                <h1 id="course-title">Продвинутый курс по уборке</h1>
+                <div id="modules">
+                    <div class="module completed">Модуль 1: Основы уборки (пройден)</div>
+                    <div class="module" onclick="openModule()">Модуль 2: Углубленные навыки</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для модуля -->
+    <div id="module-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModuleModal()">&times;</span>
+            <h2 id="module-title">Модуль 2: Углубленные навыки</h2>
+            <video controls autoplay>
+                <source src="mp4.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <button class="test-button" onclick="openTest()" style="padding: 16px 0;">Пройти тест</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно для теста -->
+    <div id="test-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeTestModal()">&times;</span>
+            <h2>Тест по модулю 2</h2>
+            <form id="test-form" onsubmit="submitTest(event)" style="width: 100%;">
+                <div class="survey-page" id="page-1">
+                    <h1>Вопрос 1 из 1</h1>
+                    <p>Что делать с таким клиентом?</p>
+                    <div class="options">
+                        <div class="option">Покормить
+                        </div>
+                        <div class="option">Погладить
+                        </div>
+                        <div class="option">Расчесать</div>
+                        <div class="option">Поговорить</div>
+                        <div class="option">Устроить фотосессию
+                        </div>
+                        <div class="option">Обучить командам
+                        </div>
+                        <div class="option" onclick="submitTest(event)">Всё вышеперечисленное
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showContent(section, element) {
+            // Скрываем все секции контента
+            const sections = ['feed', 'knowledge-base', 'profile'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(section).classList.remove('hidden');
+
+            // Убираем класс active со всех кнопок
+            const items = document.querySelectorAll('.navbar-item');
+            items.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Добавляем класс active к текущей кнопке
+            element.classList.add('active');
+        }
+
+        // Функция для форматирования даты
+        function formatDate(date) {
+            const daysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+            const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+            const today = new Date();
+            const diff = (date - today) / (1000 * 60 * 60 * 24);
+
+            if (diff < 1 && diff >= 0) return 'Сегодня';
+            if (diff < 2 && diff >= 1) return 'Завтра';
+
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const dayOfWeek = daysOfWeek[date.getDay()];
+
+            return `${day} ${month}, ${dayOfWeek}`;
+        }
+
+        // Установка дат
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        document.getElementById('today-date').textContent = formatDate(today);
+        document.getElementById('tomorrow-date').textContent = formatDate(tomorrow);
+
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const contentTabs = document.querySelectorAll('.content-tab');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contentTabs.forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`#${tabId}`).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+        }
+
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function searchContent() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('.accordion-item');
+
+            items.forEach(item => {
+                const title = item.querySelector('.accordion-title').textContent.toLowerCase();
+                const content = item.querySelector('.accordion-content').textContent.toLowerCase();
+
+                if (title.includes(query) || content.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        let answers = {};
+
+        function openSurveyModal() {
+            document.getElementById('survey-modal').classList.remove('hidden');
+            showPage(1);
+        }
+
+        function closeSurveyModal() {
+            document.getElementById('survey-modal').classList.add('hidden');
+            answers = {}; // Очистка ответов
+        }
+
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll('.survey-page');
+            pages.forEach(page => page.classList.add('hidden'));
+            document.getElementById(`page-${pageNumber}`).classList.remove('hidden');
+        }
+
+        function selectAnswer(currentPage, answer, element) {
+            answers[`q${currentPage}`] = answer;
+
+            // Удалить выделение с предыдущих элементов
+            const options = element.parentNode.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+
+            // Выделить текущий элемент
+            element.classList.add('selected');
+
+            // Автоматический переход к следующему вопросу
+            if (currentPage < 3) {
+                setTimeout(() => showPage(currentPage + 1), 300);
+            } else {
+                setTimeout(() => submitSurvey(), 300);
+            }
+        }
+
+        function prevPage(currentPage) {
+            showPage(currentPage - 1);
+        }
+
+        function submitSurvey() {
+            console.log('Ответы:', answers);
+            alert('Спасибо за прохождение опроса!');
+            const elementToHide = document.getElementById('s');
+            if (elementToHide) {
+                elementToHide.classList.add('hidden');
+            }
+            closeSurveyModal();
+        }
+
+        function openCourseModal() {
+            document.getElementById('course-modal').classList.remove('hidden');
+        }
+
+        function closeCourseModal() {
+            document.getElementById('course-modal').classList.add('hidden');
+        }
+
+        function openModule() {
+            closeCourseModal();
+            document.getElementById('module-modal').classList.remove('hidden');
+        }
+
+        function closeModuleModal() {
+            document.getElementById('module-modal').classList.add('hidden');
+        }
+
+        function openTest() {
+            closeModuleModal();
+            document.getElementById('test-modal').classList.remove('hidden');
+        }
+
+        function closeTestModal() {
+            document.getElementById('test-modal').classList.add('hidden');
+        }
+
+        function submitTest(event) {
+            event.preventDefault();
+            closeTestModal();
+            alert('Тест пройден! Прогресс обновлён.');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = document.querySelector('.progress .bar');
+            const percentage = document.querySelector('.progress .percentage');
+            progress.style.width = '100%';
+            percentage.textContent = '100%';
+        }
+
+        function completeTask() {
+            const task = document.getElementById('first-task');
+            const noTasks = document.getElementById('no-tasks');
+
+            // Анимация исчезновения
+            task.classList.add('fade-out');
+
+            // Показать "Нет задач" после завершения анимации
+            setTimeout(() => {
+                task.classList.add('hidden');
+                noTasks.classList.remove('hidden');
+                noTasks.classList.add('fade-in');
+            }, 500); // Длительность совпадает с анимацией
+        }
+
+    </script>
+</body>
+
+</html>
